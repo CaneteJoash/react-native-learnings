@@ -3,6 +3,7 @@ import { Image } from 'expo-image';
 import Drill2 from '@/components/organism/Drill2';
 import Drill3 from '@/components/organism/Drill3';
 import Drill4 from '@/components/organism/Drill4';
+import Drill5 from '@/components/organism/Drill5';
 import ParallaxScrollView from '@/components/parallax-scroll-view';
 import { ThemedText } from '@/components/themed-text';
 import { styles } from '@/constants/styles';
@@ -27,6 +28,8 @@ export default function HomeScreen() {
       <Drill3 />
       <ThemedText >=====================================</ThemedText>
       <Drill4 />
+      <ThemedText >=====================================</ThemedText>
+      <Drill5 />
       <ThemedText >=====================================</ThemedText>
     </ParallaxScrollView>
 
