@@ -1,42 +1,77 @@
 import { Link, useRouter } from 'expo-router';
 import { ActivityIndicator, FlatList, Pressable, StyleSheet } from 'react-native';
 
+import { SyncIndicator } from '@/components/organism/SyncIndicator';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { useNotes } from '@/hooks/use-notes';
 
+const SYNC_LABEL: Record<'pending' | 'syncing' | 'failed', string> = {
+  pending: ' · pending',
+  syncing: ' · syncing…',
+  failed: ' · failed',
+};
+
 export default function NotesListScreen() {
   const router = useRouter();
-  const { state, retry } = useNotes();
+  const {
+    notes,
+    isLoading,
+    isPaused,
+    isError,
+    error,
+    pendingCount,
+    failedCount,
+    refetch,
+    retryFailedNotes,
+  } = useNotes();
 
   return (
     <ThemedView style={styles.container}>
-      {state.status === 'loading' && (
+      <SyncIndicator
+        pendingCount={pendingCount}
+        failedCount={failedCount}
+        onRetryFailed={retryFailedNotes}
+      />
+
+      {isLoading && (
         <ThemedView style={styles.center}>
           <ActivityIndicator />
           <ThemedText>Loading notes…</ThemedText>
         </ThemedView>
       )}
 
-      {state.status === 'error' && (
+      {!isLoading && isPaused && notes.length === 0 && (
+        <ThemedView style={styles.center}>
+          <ThemedText type="defaultSemiBold">You&apos;re offline</ThemedText>
+          <ThemedText style={styles.errorDetail}>
+            No cached notes yet — reconnect to load your notes.
+          </ThemedText>
+        </ThemedView>
+      )}
+
+      {!isLoading && isError && notes.length === 0 && (
         <ThemedView style={styles.center}>
           <ThemedText type="defaultSemiBold">Couldn&apos;t load notes</ThemedText>
-          <ThemedText style={styles.errorDetail}>{state.error.message}</ThemedText>
-          <Pressable style={styles.retryButton} onPress={retry}>
+          <ThemedText style={styles.errorDetail}>{error?.message}</ThemedText>
+          <Pressable style={styles.retryButton} onPress={() => refetch()}>
             <ThemedText type="link">Retry</ThemedText>
           </Pressable>
         </ThemedView>
       )}
 
-      {state.status === 'success' && (
+      {notes.length > 0 && (
         <FlatList
-          data={state.notes}
+          data={notes}
           keyExtractor={(note) => note.id}
           contentContainerStyle={styles.list}
           renderItem={({ item }) => (
             <Link href={{ pathname: '/notes/[id]', params: { id: item.id } }} asChild>
               <Pressable style={styles.row}>
-                <ThemedText type="defaultSemiBold">{item.title}</ThemedText>
+                <ThemedText type="defaultSemiBold">
+                  {item.title}
+                  {item.syncStatus ? SYNC_LABEL[item.syncStatus] : ''}
+                </ThemedText>
               </Pressable>
             </Link>
           )}

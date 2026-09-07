@@ -1,16 +1,41 @@
 import { useRouter } from 'expo-router';
-import { StyleSheet } from 'react-native';
+import { useState } from 'react';
+import { Pressable, StyleSheet, TextInput } from 'react-native';
 
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
+import { useNotes } from '@/hooks/use-notes';
 
 export default function ComposeScreen() {
   const router = useRouter();
+  const { createNote } = useNotes();
+  const [title, setTitle] = useState('');
+
+  const handleSave = () => {
+    const trimmed = title.trim();
+    if (!trimmed) return;
+    createNote(trimmed);
+    router.back();
+  };
 
   return (
     <ThemedView style={styles.container}>
       <ThemedText type="title">Compose</ThemedText>
-      <ThemedText>Placeholder modal — reachable from any tab.</ThemedText>
+      <ThemedText>Saved offline first — it syncs once you&apos;re back online.</ThemedText>
+
+      <TextInput
+        value={title}
+        onChangeText={setTitle}
+        placeholder="Note title"
+        style={styles.input}
+        autoFocus
+        onSubmitEditing={handleSave}
+        returnKeyType="done"
+      />
+
+      <Pressable style={styles.action} onPress={handleSave}>
+        <ThemedText type="link">Save</ThemedText>
+      </Pressable>
 
       <ThemedText type="link" style={styles.action} onPress={() => router.back()}>
         Dismiss
@@ -26,6 +51,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 20,
     gap: 12,
+  },
+  input: {
+    width: '100%',
+    height: 44,
+    borderWidth: 1,
+    borderColor: '#999',
+    borderRadius: 8,
+    paddingHorizontal: 12,
   },
   action: {
     marginTop: 8,
