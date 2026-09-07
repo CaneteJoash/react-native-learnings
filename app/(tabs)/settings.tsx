@@ -6,6 +6,7 @@ import Drill3 from '@/components/organism/Drill3';
 import Drill4 from '@/components/organism/Drill4';
 import Drill5 from '@/components/organism/Drill5';
 import Drill7 from '@/components/organism/Drill7';
+import Drill8 from '@/components/organism/Drill8';
 import { ThemedText } from '@/components/themed-text';
 
 export default function SettingsScreen() {
@@ -33,6 +34,8 @@ export default function SettingsScreen() {
       <Drill5 />
       <ThemedText>=====================================</ThemedText>
       <Drill7 />
+      <ThemedText>=====================================</ThemedText>
+      <Drill8 />
       <ThemedText>=====================================</ThemedText>
     </ScrollView>
   );

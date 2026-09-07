@@ -1,4 +1,4 @@
-import { FlatList, ScrollView, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { ThemedText } from '../themed-text';
 
 const DATA = Array.from({ length: 15 }, (_, index) => ({
@@ -15,11 +15,11 @@ export default function Drill5() {
                 ))}
             </ScrollView>
 
-            <FlatList
+            {/* <FlatList
                 data={DATA}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => <ThemedText>Flat List{item.title}</ThemedText>}
-            />
+            /> */}
         </View>
     );
 }
