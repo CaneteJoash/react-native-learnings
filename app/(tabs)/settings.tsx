@@ -8,6 +8,7 @@ import Drill5 from '@/components/organism/Drill5';
 import Drill7 from '@/components/organism/Drill7';
 import Drill8 from '@/components/organism/Drill8';
 import Drill9 from '@/components/organism/Drill9';
+import Drill10 from '@/components/organism/Drill10';
 import { ThemedText } from '@/components/themed-text';
 
 export default function SettingsScreen() {
@@ -39,6 +40,8 @@ export default function SettingsScreen() {
       <Drill8 />
       <ThemedText>=====================================</ThemedText>
       <Drill9 />
+      <ThemedText>=====================================</ThemedText>
+      <Drill10 />
       <ThemedText>=====================================</ThemedText>
     </ScrollView>
   );
