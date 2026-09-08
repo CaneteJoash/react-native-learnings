@@ -3,6 +3,7 @@ import { ScrollView, StyleSheet } from 'react-native';
 
 import Drill10 from '@/components/organism/Drill10';
 import Drill11 from '@/components/organism/Drill11';
+import Drill12 from '@/components/organism/Drill12';
 import Drill2 from '@/components/organism/Drill2';
 import Drill3 from '@/components/organism/Drill3';
 import Drill4 from '@/components/organism/Drill4';
@@ -45,6 +46,8 @@ export default function SettingsScreen() {
       <Drill10 />
       <ThemedText>=====================================</ThemedText>
       <Drill11 />
+      <ThemedText>=====================================</ThemedText>
+      <Drill12 />
       <ThemedText>=====================================</ThemedText>
     </ScrollView>
   );
