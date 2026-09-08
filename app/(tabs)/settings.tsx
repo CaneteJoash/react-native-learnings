@@ -1,6 +1,8 @@
 import { useRouter } from 'expo-router';
 import { ScrollView, StyleSheet } from 'react-native';
 
+import Drill10 from '@/components/organism/Drill10';
+import Drill11 from '@/components/organism/Drill11';
 import Drill2 from '@/components/organism/Drill2';
 import Drill3 from '@/components/organism/Drill3';
 import Drill4 from '@/components/organism/Drill4';
@@ -8,7 +10,6 @@ import Drill5 from '@/components/organism/Drill5';
 import Drill7 from '@/components/organism/Drill7';
 import Drill8 from '@/components/organism/Drill8';
 import Drill9 from '@/components/organism/Drill9';
-import Drill10 from '@/components/organism/Drill10';
 import { ThemedText } from '@/components/themed-text';
 
 export default function SettingsScreen() {
@@ -42,6 +43,8 @@ export default function SettingsScreen() {
       <Drill9 />
       <ThemedText>=====================================</ThemedText>
       <Drill10 />
+      <ThemedText>=====================================</ThemedText>
+      <Drill11 />
       <ThemedText>=====================================</ThemedText>
     </ScrollView>
   );
