@@ -19,7 +19,7 @@ export default function ComposeScreen() {
   };
 
   return (
-    <ThemedView style={styles.container}>
+    <ThemedView style={styles.container} accessibilityViewIsModal>
       <ThemedText type="title">Compose</ThemedText>
       <ThemedText>Saved offline first — it syncs once you&apos;re back online.</ThemedText>
 
