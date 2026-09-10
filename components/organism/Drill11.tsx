@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/refs -- Animated.Value is a deliberate escape hatch from
    React's render-purity model; see CollapsingHeader.tsx for the full note. */
 import { useEffect, useRef, useState } from 'react';
-import { Animated, StyleSheet, View } from 'react-native';
+import { AccessibilityInfo, Animated, StyleSheet, View } from 'react-native';
 
 import { styles } from '@/constants/styles';
 import { AppButton } from '@/components/molecule/AppButton';
@@ -15,6 +15,7 @@ const BLOCK_DURATION_MS = 2000;
 export default function Drill11() {
   const [heartbeat, setHeartbeat] = useState(0);
   const [isBlocking, setIsBlocking] = useState(false);
+  const [reduceMotionEnabled, setReduceMotionEnabled] = useState(false);
   const pulse = useRef(new Animated.Value(0)).current;
 
   // Runs on the JS thread. If the busy loop below freezes that thread, this
@@ -24,9 +25,25 @@ export default function Drill11() {
     return () => clearInterval(id);
   }, []);
 
-  // Native-driven, looping, started once. If it keeps moving during the busy
-  // loop, it is not waiting on the JS thread for its next frame.
   useEffect(() => {
+    AccessibilityInfo.isReduceMotionEnabled().then(setReduceMotionEnabled);
+    const subscription = AccessibilityInfo.addEventListener(
+      'reduceMotionChanged',
+      setReduceMotionEnabled,
+    );
+    return () => subscription.remove();
+  }, []);
+
+  // Native-driven, looping, started once. If it keeps moving during the busy
+  // loop, it is not waiting on the JS thread for its next frame. Purely
+  // decorative — no information rides on it — so Reduce Motion stops it
+  // outright rather than just shortening it.
+  useEffect(() => {
+    if (reduceMotionEnabled) {
+      pulse.stopAnimation();
+      pulse.setValue(0);
+      return;
+    }
     const loop = Animated.loop(
       Animated.sequence([
         Animated.timing(pulse, { toValue: 1, duration: 500, useNativeDriver: true }),
@@ -35,7 +52,7 @@ export default function Drill11() {
     );
     loop.start();
     return () => loop.stop();
-  }, [pulse]);
+  }, [pulse, reduceMotionEnabled]);
 
   const pulseScale = pulse.interpolate({ inputRange: [0, 1], outputRange: [1, 1.6] });
 
@@ -75,6 +92,9 @@ export default function Drill11() {
         <ThemedText>Native-driven pulse (UI thread): </ThemedText>
         <Animated.View style={[drillStyles.pulseDot, { transform: [{ scale: pulseScale }] }]} />
       </View>
+      <ThemedText>
+        Reduce Motion: {reduceMotionEnabled ? 'on — pulse disabled' : 'off — pulse running'}
+      </ThemedText>
       <View style={drillStyles.row}>
         <AppButton title="Block JS thread 2s" onPress={blockJsThread} loading={isBlocking} />
       </View>
