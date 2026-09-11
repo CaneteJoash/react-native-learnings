@@ -1,0 +1,16 @@
+# E2E — vital flow only: offline note creation must survive reconnect.
+# Run against a release build on a device/emulator:
+#   maestro test .maestro/note-sync-offline.yaml
+appId: com.anonymous.hellorn
+---
+- launchApp
+- assertVisible: 'Compose'
+- setAirplaneMode: enabled
+- tapOn: 'Compose'
+- inputText: 'Buy milk'
+- tapOn: 'Save'
+- assertVisible: 'Buy milk'
+- assertVisible: 'pending'
+- setAirplaneMode: disabled
+- assertNotVisible: 'pending'
+- assertNotVisible: 'failed'

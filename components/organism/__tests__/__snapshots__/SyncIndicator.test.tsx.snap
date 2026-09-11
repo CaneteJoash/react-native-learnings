@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`small snapshot: pending-only vs failed state diff stays reviewable 1`] = `
+"Snapshot Diff:
+- First value
++ Second value
+
+  Object {
+-   "hasRetry": false,
+-   "message": "1 note syncing",
++   "hasRetry": true,
++   "message": "1 note syncing · 1 failed to sync",
+  }"
+`;

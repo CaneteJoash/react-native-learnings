@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
-import { fetchNotes, type Note } from '@/lib/notes-api';
+import { fetchNotes } from '@/lib/notes-api';
 import {
   enqueueNote,
   flushWriteQueue,
@@ -9,10 +9,11 @@ import {
   subscribeToWriteQueue,
   type QueuedNote,
 } from '@/lib/write-queue';
+import { mergeNoteList, type MergedNote } from '@/lib/write-queue-logic';
 
 export const NOTES_QUERY_KEY = ['notes'];
 
-export type NoteListItem = Note & { syncStatus?: QueuedNote['status'] };
+export type NoteListItem = MergedNote;
 
 export function useNotes() {
   const queryClient = useQueryClient();
@@ -21,13 +22,7 @@ export function useNotes() {
 
   useEffect(() => subscribeToWriteQueue(setPending), []);
 
-  const pendingItems: NoteListItem[] = pending.map((item) => ({
-    id: item.clientId,
-    title: item.title,
-    syncStatus: item.status,
-  }));
-
-  const notes: NoteListItem[] = [...pendingItems, ...(query.data ?? [])];
+  const notes: NoteListItem[] = mergeNoteList(pending, query.data ?? []);
 
   return {
     notes,
