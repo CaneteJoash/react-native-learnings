@@ -9,12 +9,13 @@ import { useNotes } from '@/hooks/use-notes';
 export default function ComposeScreen() {
   const router = useRouter();
   const { createNote } = useNotes();
-  const [title, setTitle] = useState('');
+  const [draftTitle, setDraftTitle] = useState('');
+
+  const canSave = draftTitle.trim().length > 0;
 
   const handleSave = () => {
-    const trimmed = title.trim();
-    if (!trimmed) return;
-    createNote(trimmed);
+    if (!canSave) return;
+    createNote(draftTitle.trim());
     router.back();
   };
 
@@ -24,8 +25,8 @@ export default function ComposeScreen() {
       <ThemedText>Saved offline first — it syncs once you&apos;re back online.</ThemedText>
 
       <TextInput
-        value={title}
-        onChangeText={setTitle}
+        value={draftTitle}
+        onChangeText={setDraftTitle}
         placeholder="Note title"
         style={styles.input}
         autoFocus

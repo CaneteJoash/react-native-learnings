@@ -8,17 +8,24 @@ type Props = {
   onRetryFailed: () => void;
 };
 
-export function SyncIndicator({ pendingCount, failedCount, onRetryFailed }: Props) {
-  if (pendingCount === 0 && failedCount === 0) return null;
+function describeSyncState(pendingCount: number, failedCount: number): string {
+  const segments = [
+    pendingCount > 0 ? `${pendingCount} note${pendingCount === 1 ? '' : 's'} syncing` : null,
+    failedCount > 0 ? `${failedCount} failed to sync` : null,
+  ].filter((segment): segment is string => segment !== null);
+  return segments.join(' · ');
+}
 
-  const parts: string[] = [];
-  if (pendingCount > 0) parts.push(`${pendingCount} note${pendingCount === 1 ? '' : 's'} syncing`);
-  if (failedCount > 0) parts.push(`${failedCount} failed to sync`);
+export function SyncIndicator({ pendingCount, failedCount, onRetryFailed }: Props) {
+  const hasWork = pendingCount > 0 || failedCount > 0;
+  const hasFailures = failedCount > 0;
+
+  if (!hasWork) return null;
 
   return (
-    <View style={[styles.bar, failedCount > 0 && styles.failed]}>
-      <ThemedText style={styles.text}>{parts.join(' · ')}</ThemedText>
-      {failedCount > 0 && (
+    <View style={[styles.bar, hasFailures && styles.failed]}>
+      <ThemedText style={styles.text}>{describeSyncState(pendingCount, failedCount)}</ThemedText>
+      {hasFailures && (
         <Pressable onPress={onRetryFailed}>
           <ThemedText type="link" style={styles.retry}>
             Retry
