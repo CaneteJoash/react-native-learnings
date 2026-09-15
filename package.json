@@ -11,7 +11,15 @@
     "lint": "expo lint",
     "test:unit": "node --test 'lib/**/*.test.ts'",
     "test:component": "jest",
-    "test": "npm run test:unit && npm run test:component"
+    "test": "npm run test:unit && npm run test:component",
+    "build:android:preview": "eas build --platform android --profile preview",
+    "build:android:production": "eas build --platform android --profile production",
+    "build:ios:preview": "eas build --platform ios --profile preview",
+    "build:ios:production": "eas build --platform ios --profile production",
+    "submit:android": "eas submit --platform android --latest",
+    "submit:ios": "eas submit --platform ios --latest",
+    "update:preview": "eas update --branch preview",
+    "update:production": "eas update --branch production"
   },
   "jest": {
     "preset": "jest-expo",
@@ -41,6 +49,7 @@
     "expo-status-bar": "~57.0.1",
     "expo-symbols": "~57.0.2",
     "expo-system-ui": "~57.0.3",
+    "expo-updates": "~57.0.22",
     "expo-web-browser": "~57.0.2",
     "react": "19.2.3",
     "react-dom": "19.2.3",

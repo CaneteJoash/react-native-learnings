@@ -12,7 +12,8 @@
     "userInterfaceStyle": "automatic",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.hellorn"
+      "bundleIdentifier": "com.anonymous.hellorn",
+      "buildNumber": "1"
     },
     "android": {
       "adaptiveIcon": {
@@ -27,7 +28,11 @@
         "android.permission.ACCESS_COARSE_LOCATION",
         "android.permission.ACCESS_FINE_LOCATION"
       ],
-      "package": "com.anonymous.hellorn"
+      "package": "com.anonymous.hellorn",
+      "versionCode": 1
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
     },
     "web": {
       "output": "static",
@@ -68,7 +73,8 @@
           "locationAlwaysPermission": false,
           "motionUsagePermission": false
         }
-      ]
+      ],
+      "./plugins/with-android-release-signing"
     ],
     "experiments": {
       "typedRoutes": true,
