@@ -229,4 +229,47 @@ export const styles = StyleSheet.create({
         marginBottom: 20,
         lineHeight: 20,
     },
+
+    loginContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        padding: 24,
+        gap: 4,
+    },
+
+    loginTitle: {
+        marginBottom: 24,
+        textAlign: 'center',
+    },
+
+    loginBanner: {
+        backgroundColor: '#FEE2E2',
+        borderColor: '#DC2626',
+        borderWidth: 1,
+        borderRadius: 8,
+        padding: 12,
+        marginBottom: 16,
+    },
+
+    loginBannerText: {
+        color: '#B91C1C',
+    },
+
+    fieldGroup: {
+        marginBottom: 16,
+    },
+
+    fieldLabel: {
+        marginBottom: 6,
+    },
+
+    fieldError: {
+        color: '#DC2626',
+        fontSize: 13,
+        marginTop: 4,
+    },
+
+    loginSubmit: {
+        marginTop: 8,
+    },
 });
