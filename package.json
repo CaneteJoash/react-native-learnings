@@ -66,6 +66,7 @@
     "@types/jest": "29.5.14",
     "@types/node": "^26.4.1",
     "@types/react": "~19.2.4",
+    "babel-plugin-transform-remove-console": "^6.9.4",
     "eslint": "^9.25.0",
     "eslint-config-expo": "~57.0.2",
     "eslint-plugin-jest": "^29.16.6",

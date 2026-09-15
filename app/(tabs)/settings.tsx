@@ -7,6 +7,7 @@ import Drill12 from '@/components/organism/Drill12';
 import Drill13 from '@/components/organism/Drill13';
 import Drill14 from '@/components/organism/Drill14';
 import Drill16 from '@/components/organism/Drill16';
+import Drill17 from '@/components/organism/Drill17';
 import Drill2 from '@/components/organism/Drill2';
 import Drill3 from '@/components/organism/Drill3';
 import Drill4 from '@/components/organism/Drill4';
@@ -57,6 +58,8 @@ export default function SettingsScreen() {
       <Drill14 />
       <ThemedText>=====================================</ThemedText>
       <Drill16 />
+      <ThemedText>=====================================</ThemedText>
+      <Drill17 />
       <ThemedText>=====================================</ThemedText>
     </ScrollView>
   );
